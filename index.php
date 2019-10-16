@@ -2,11 +2,19 @@
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-    $arr = [
-        "show" => $_POST["show"] ?? false,
-        "origin" => $_POST["origin"] ?? "",
-        "name" => $_POST["name"] ?? ""
-    ];
+    if($_POST['encoding'] == "sjis"){
+        $arr = [
+            "show" => $_POST["show"] ?? false,
+            "origin" => mb_convert_encoding($_POST["origin"], "UTF-8", "SJIS") ?? "",
+            "name" => mb_convert_encoding($_POST["name"], "UTF-8", "SJIS") ?? ""
+        ];
+    } else {
+        $arr = [
+            "show" => $_POST["show"] ?? false,
+            "origin" => $_POST["origin"] ?? "",
+            "name" => $_POST["name"] ?? ""
+        ];
+    }
 
     if (!isset($arr["show"])){
         $arr["show"] = false;
